@@ -1,0 +1,74 @@
+step 1:
+install nginx: dnf install nginx
+start nginx: systemctl start nginx
+
+generate kdlp.conf from kdlp.ini using genginx.py
+make it 744 permissions and put it in the /etc/nginx/conf.d
+
+make sure config with correct SELinux label: restorecon -Rv /etc/nginx/
+(VERY IMPORANT)
+
+reload: nginx -s reload
+
+step 2. 
+
+install uwsgi:
+dnf install pip python-devel
+
+put the servers in the right place, check out right version
+(skipping for now, doing this manually)
+make sure they have the right ports (will be automated)
+TODO: automate this
+start the servers
+
+(do config...)
+note: md.py requires markdown: pip install markdown
+note: gam.py requires requests: pip install requests
+note: auth.py requires bcrypt: pip install bcrypt
+
+
+step 3??
+
+keep in mind the data directory (style, favicon, etc) will throw permission denied back at nginx
+while showing 200 to uwsgi due to selinux errors.
+We can either move this and restore labels, or add labels to the data directory as follows:
+
+chcon -R -t httpd_sys_content_t /mnt/telomerase/servers/kdlp.underground.software/data/
+
+works immediately.
+
+TODO: add data directory to genginx output
+
+
+step 4:
+install cgit and fcgiwrap: dnf install cgit fcgiwrap
+
+config options needed:
+
+virtual-root=/cgit
+scan-path=/mnt/telomerasee/git
+css=/style.css
+
+
+(INCOMPLETE)
+
+run the server with: fcgiwrap -s tcp:127.0.0.1:7070
+assuming that's the port
+
+
+
+step 5: the moons of auth
+
+to intialize the users and sessions databases:
+sqlite3 users.db ".read users.default" ".exit"
+sqlite3 sessions.db ".read sessions.default" ".exit"
+
+honestly pretty easy...
+
+Create users with:
+
+auth.py/user.sh <name> <password>
+
+to insert the bcrypt hash into the users database
+
+This part was wayy easier than expected.
