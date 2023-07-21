@@ -69,7 +69,7 @@ def make_nginx_uwsgi_block(location, port, comment, auth=False, authority=False)
 
     # TEMPORARY: run auth server as http (need to get it working internally with uwsgi)
     if authority:
-        block += '\tproxy_pass https://localhost:' + port + ';\n}\n\n'
+        block += '\tproxy_pass http://localhost:' + port + ';\n}\n\n'
     else:
         block += '\tuwsgi_pass uwsgi://localhost:' + port + ';\n}\n\n'
 

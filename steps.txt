@@ -24,6 +24,7 @@ start the servers
 (do config...)
 note: md.py requires markdown: pip install markdown
 note: gam.py requires requests: pip install requests
+	since get_authorized_user is in all: this is a global dependency
 note: auth.py requires bcrypt: pip install bcrypt
 
 
