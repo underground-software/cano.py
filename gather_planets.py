@@ -34,15 +34,14 @@ planets = parser['planets']
 for planet in planets:
     _plan = parser[planet]
     config = ''
-    print('#####')
-    print('APPLICATION = %s' % planet)
-    print('VERSION = %s' % _plan.get('ver'))
-    print('SOURCE = %s' % planets[planet])
+
+    ver = _plan.get('ver')
+    source = planets[planet]
+    print('##### GATHER %s %s %s ######' % (planet, ver, source))
 
     config += "APPLICATION = '%s'\n" % planet
-    config += "VERSION = '%s'\n" % _plan.get('ver')
-    config += "SOURCE = '%s'\n" % planets[planet]
-    source = planets[planet]
+    config += "VERSION = '%s'\n" % ver
+    config += "SOURCE = '%s'\n" % source
 
     # don't bother with version until this stabilizes
     #ver = planet[ver]
@@ -72,13 +71,10 @@ for planet in planets:
 
 
 root = parser['root']
-print('#### root ####')
-print('source = %s' % root.get('source'))
-print('ver = %s' % root.get('ver'))
-print('headers = %s' % root.get('headers'))
-
 root_source = root.get('source')
 root_ver = root.get('ver')
+
+print('##### root %s %s #####' % (root_ver, root_source))
 
 repo = Repo.clone_from(root_source, 'root')
 repo.head.reference = repo.create_head(root_ver, 'origin/' + root_ver)
