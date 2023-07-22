@@ -7,7 +7,8 @@ from orbit import DP
 
 START_TEMPLATE="""
 [uwsgi]
-socket = localhost:%s
+socket = localhost:%(port)s
+chdir = %(dir)s
 wsgi-file = app.py
 processes = 4
 threads = 2
@@ -59,7 +60,9 @@ for planet in planets:
     with open(planet + '/orbit.py', 'w') as file:
         file.write(filedata)
 
-    start_ini = START_TEMPLATE % _plan.get('port')
+    start_ini = START_TEMPLATE % {
+            "port": _plan.get('port'),
+            "dir": "%s/%s" % (os.getcwd(), planet)}
     # bad hack to make auth server run over http
     # should not hardcode this but I'm doing it anyway for now
     # FIXME
@@ -67,8 +70,6 @@ for planet in planets:
         start_ini = start_ini.replace('socket', 'http')
     with open(planet + '/start.ini', 'w') as file:
         file.write(start_ini)
-
-
 
 root = parser['root']
 root_source = root.get('source')
