@@ -53,6 +53,20 @@ location = / {
 }
 """.strip() + '\n\n'
 
+# TODO: un-hardcode this
+CGIT_BLOCK="""
+# CGIT COMET
+location ~* /cgit(.*) {
+	include fastcgi_params;
+
+	fastcgi_param SCRIPT_FILENAME /var/www/cgi-bin/cgit;
+	fastcgi_param PATH_INFO $1;
+
+	fastcgi_pass localhost:7070;
+}
+""".strip()
+
+
 # default to something bad to detect badness more easily
 authority_port = "XXXXXX"
 
@@ -109,7 +123,7 @@ AUTH_CHECK = AUTH_CHECK_TEMPLATE % authority_port
 with open('auth_server', 'w') as file:
     file.write('http://127.0.0.1:%s/check' % authority_port)
 
-nginx_config = HEADER + ROOT + AUTH_CHECK + SPECIAL_NAKED_EXCEPTION + blocks
+nginx_config = HEADER + ROOT + AUTH_CHECK + SPECIAL_NAKED_EXCEPTION + blocks + CGIT_BLOCK
 
 # just dump it to stdout
 print(nginx_config)

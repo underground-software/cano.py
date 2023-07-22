@@ -25,3 +25,8 @@
 
 # run pip install -r requirements.txt in each repo
 # honestly maybe run a 'setup.sh' in each on (based on config?)
+# TODO
+#
+# cgit setup
+
+dnf install cgit fcgiwrap
