@@ -99,6 +99,9 @@ def table(c, i=0):
         h=False
     return oxo(i, '<table>', t, '</table>')
 
+def button(c, i=0, a=''):
+    return oOo(i, '<button %s>' % a, c, '</button>')
+
 def debug_table(fname):
     tc = [('key', 'value')]
     found =''
