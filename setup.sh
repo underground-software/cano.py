@@ -59,3 +59,5 @@ chcon -R -t httpd_sys_content_t .
 
 # this is needed to wrap the cgit cgi script
 dnf install -y cgit fcgiwrap
+
+# start the server and run 'cgit_setup.sh'
