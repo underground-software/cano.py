@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# make sure the current directory is the script directory
+cd $(dirname $0)
+
 # TODO check if we are in /root
 if pwd | grep "^/root" > /dev/null; then
 	echo "Please don't install this system in /root"
@@ -36,6 +39,9 @@ systemctl is-active --quiet nginx && \
 
 # allow the server to access the network
 setsebool -P httpd_can_network_connect 1
+
+# allow anything in this directory to be served over http
+chcon -R -t httpd_sys_content_t .
 
 # Download the servers and give them the orbit library and start.ini files
 ./gather_planets.py kdlp.ini
