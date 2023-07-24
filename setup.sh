@@ -32,6 +32,9 @@ setsebool -P httpd_can_network_connect 1
 
 ./gather_planets.py
 
+# run setup scripts
+./post_gather
+
 # run pip install -r requirements.txt in each repo
 # honestly maybe run a 'setup.sh' in each on (based on config?)
 # TODO

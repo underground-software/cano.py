@@ -47,7 +47,7 @@ install cgit and fcgiwrap: dnf install cgit fcgiwrap
 config options needed:
 
 virtual-root=/cgit
-scan-path=/mnt/telomerasee/git
+scan-path=/mnt/telomerase/git
 css=/style.css
 
 
@@ -64,6 +64,7 @@ to intialize the users and sessions databases:
 sqlite3 users.db ".read users.default" ".exit"
 sqlite3 sessions.db ".read sessions.default" ".exit"
 
+(now a script: auth.py/setup.sh
 honestly pretty easy...
 
 Create users with:
