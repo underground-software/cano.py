@@ -1,6 +1,6 @@
 #!/bin/env python3
 
-import os
+import os, sys
 from configparser import ConfigParser
 from git import Repo
 from orbit import DP
@@ -25,8 +25,12 @@ try:
 except:
     DP('no auth_server file found? Run genginx.py first or create it manually')
 
+ini_file='kdlp.ini'
+if len(sys.argv) > 1:
+    ini_file = sys.argv[1]
+
 parser = ConfigParser()
-parser.read('kdlp.ini')
+parser.read(ini_file)
 planets = parser['planets']
 
 

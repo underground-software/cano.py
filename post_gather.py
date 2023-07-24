@@ -2,17 +2,27 @@
 
 from subprocess import run, PIPE
 from configparser import ConfigParser
+import sys
+
+ini_file='kdlp.ini'
+if len(sys.argv) > 1:
+    ini_file = sys.argv[1]
+
 
 parser = ConfigParser()
-parser.read('kdlp.ini')
+parser.read(ini_file)
 planets = parser['planets']
 
 for planet in planets:
     setup = parser[planet].get('setup', None)
     if setup is None:
-        print("No setup for %s\n", planet)
+        print("No setup for %s" % planet)
         continue
-    print("Running %s/%s...\n", (planet, setup))
 
-    out = run(['%s/%s' % (planet, setup)], stdout=PIPE, stderr=PIPE)
-    print("\t(ret = %d)\n" % (out.returncode))
+    script_path = "%s/%s"  % (planet, setup)
+    print("Running %s..." % script_path)
+
+
+    out = run(script_path, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+    print("out: %s" % out.stdout)
+    print("\t(ret = %d)" % (out.returncode))

@@ -113,7 +113,7 @@ if len(sys.argv) > 0:
     ini_file = sys.argv[0]
 
 parser = ConfigParser()
-parser.read('kdlp.ini')
+parser.read(ini_file)
 planets = parser['planets']
 
 ROOT = ROOT_TEMPLATE % (os.getcwd() + '/root/data')
