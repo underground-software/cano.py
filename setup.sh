@@ -32,8 +32,9 @@ restorecon -Rv /etc/nginx/
 # start nginx if not already running, restart if it is running
 systemctl is-active --quiet nginx && \
 	nginx -s reload || \
-	systemctl start gi
-# allow 
+	systemctl start nginx
+
+# allow the server to access the network
 setsebool -P httpd_can_network_connect 1
 
 # Download the servers and give them the orbit library and start.ini files
@@ -42,10 +43,7 @@ setsebool -P httpd_can_network_connect 1
 # run setup scripts for individiual apps if specified
 ./post_gather.py kdlp.ini
 
-# run pip install -r requirements.txt in each repo
-# honestly maybe run a 'setup.sh' in each on (based on config?)
 # TODO
-#
 # cgit setup
 #
 # I'm thinking something like this (in a python script)
@@ -53,4 +51,5 @@ setsebool -P httpd_can_network_connect 1
 # then based on config, check if certain repos exist
 # if they don't, clone them. If they do, update them
 
+# this is needed to wrap the cgit cgi script
 dnf install -y cgit fcgiwrap

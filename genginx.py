@@ -109,8 +109,8 @@ def make_nginx_blocks():
     return blocks
 
 ini_file='kdlp.ini'
-if len(sys.argv) > 0:
-    ini_file = sys.argv[0]
+if len(sys.argv) > 1:
+    ini_file = sys.argv[1]
 
 parser = ConfigParser()
 parser.read(ini_file)
