@@ -45,6 +45,12 @@ location /check {
 	include uwsgi_params;
 	proxy_pass http://localhost:%s$uri?$query_string;
 }
+
+location /.well-known/matrix/client {
+	return 200 '{"m.homeserver": {"base_url": "https://kdlp.underground.software:8448"}}';
+	default_type application/json;
+	add_header Access-Control-Allow-Origin *;
+}
 """.strip() + '\n\n'
 
 SPECIAL_NAKED_EXCEPTION="""
