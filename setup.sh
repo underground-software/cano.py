@@ -13,7 +13,8 @@ fi
 
 # We need nginx as our reverse proxy and sqlite for our databases
 # We need pip and python-devel to run our applications
-dnf install -y nginx sqlite pip python-devel
+# We need cronie to run cron jobs
+dnf install -y nginx sqlite pip python-devel cronie
 
 # Install python package requirements
 pip install -r requirements.txt
@@ -28,6 +29,9 @@ mv kdlp.conf /etc/nginx/conf.d
 # easy solution: swap out config with our own
 cp /etc/nginx/nginx.conf nginx.conf.bak
 cp nginx.conf.orbit /etc/nginx/nginx.conf
+
+# install our crontab setup into /etc/crontab
+cp orbit.crontab /etc/crontab
 
 # restore selinux labels on newly added files and reload nginx
 restorecon -Rv /etc/nginx/
