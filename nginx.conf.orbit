@@ -29,9 +29,22 @@ http {
 	default_type        application/octet-stream;
 
 	server {
+		ssl_certificate /etc/letsencrypt/live/kdlp.underground.software/fullchain.pem;
+		ssl_certificate_key /etc/letsencrypt/live/kdlp.underground.software/privkey.pem;
+		server_name kdlp.underground.software;
+		listen 443 ssl;
+		listen [::]:443 ssl;
+		include /etc/letsencrypt/options-ssl-nginx.conf;
+		ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+		include /etc/nginx/conf.d/kdlp.conf;
+	}
+	server {
 		listen 80;
-         	listen [::]:80;
-		include /etc/nginx/conf.d/*.conf;
+		listen [::]:80;
+		if ($host = kdlp.underground.software) {
+			return 301 https://$host$request_uri;
+		}
+		return 404;
 	}
 }
-
+include /etc/nginx/conf.d/mail.conf;
