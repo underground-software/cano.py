@@ -35,6 +35,9 @@ planets = parser['planets']
 
 
 for planet in planets:
+    if os.path.exists(planet):
+        print(f'##### SKIPPING {planet} BECAUSE IT ALREADY EXISTS #####')
+        continue
     _plan = parser[planet]
     config = ''
 
@@ -72,6 +75,10 @@ for planet in planets:
         start_ini = start_ini.replace('socket', 'http')
     with open(planet + '/start.ini', 'w') as file:
         file.write(start_ini)
+
+if os.path.exists('root'):
+    print(f'##### SKIPPING root BECAUSE IT ALREADY EXISTS #####')
+    exit()
 
 root = parser['root']
 root_source = root.get('source')
