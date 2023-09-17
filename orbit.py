@@ -33,9 +33,7 @@ def get_authorized_user(server, env):
     DP('content: %s' % res.text)
     
     if res.status_code == 200:
-        split=res.text.split('=')
-        if len(split) > 0:
-            return split[1]
+        return res.text
 
     return None
 
