@@ -121,7 +121,7 @@ blocks = make_nginx_blocks()
 AUTH_CHECK = AUTH_CHECK_TEMPLATE % authority_port
 # quick and dirty way to pass auth sever around
 with open('auth_server', 'w') as file:
-    file.write('http://127.0.0.1:%s/check' % authority_port)
+    file.write('http://127.0.0.1:%s' % authority_port)
 
 nginx_config = HEADER + ROOT + AUTH_CHECK + SPECIAL_NAKED_EXCEPTION + blocks + CGIT_BLOCK
 

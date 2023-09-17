@@ -25,7 +25,7 @@ def get_token_from_cookie(env):
 
 def get_authorized_user(server, env):
     token = get_token_from_cookie(env)
-    uri ='%s?token=%s' % (AUTH_SERVER, token)
+    uri ='%s/check?token=%s' % (AUTH_SERVER, token)
 
     res = requests.get(uri, verify=False)
 
