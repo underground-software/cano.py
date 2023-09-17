@@ -29,6 +29,7 @@ mv kdlp.conf /etc/nginx/conf.d
 # easy solution: swap out config with our own
 cp /etc/nginx/nginx.conf nginx.conf.bak
 cp nginx.conf.orbit /etc/nginx/nginx.conf
+cp mail.conf /etc/nginx/mail.conf
 
 # install our crontab setup into /etc/crontab
 cp orbit.crontab /etc/crontab
