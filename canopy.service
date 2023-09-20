@@ -1,0 +1,6 @@
+[Unit]
+Description=canopy uwsgi microservices server
+
+[Service]
+WorkingDirectory=/mnt/telomerase/cano.py/
+ExecStart=/mnt/telomerase/cano.py/start_server.sh
