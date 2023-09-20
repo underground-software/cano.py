@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cleanup() {
 	echo "Exitting..."
 	pkill fcgiwrap
