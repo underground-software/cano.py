@@ -14,7 +14,7 @@ fi
 # We need nginx as our reverse proxy and sqlite for our databases
 # We need pip and python-devel to run our applications
 # We need cronie to run cron jobs
-dnf install -y nginx sqlite pip python-devel cronie
+dnf install -y nginx sqlite pip python-devel cronie gcc
 
 # Install python package requirements
 pip install -r requirements.txt
@@ -66,3 +66,7 @@ chcon -R -t httpd_sys_content_t .
 dnf install -y cgit fcgiwrap
 
 # start the server and run 'cgit_setup.sh'
+
+# Install the server as a service
+cp canopy.service /etc/systemd/system/
+systemctl enable --now canopy
