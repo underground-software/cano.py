@@ -51,6 +51,13 @@ location /.well-known/matrix/client {
 	default_type application/json;
 	add_header Access-Control-Allow-Origin *;
 }
+
+location = /devfooter {
+    internal;
+    return 200 "<hr><i><h3>Development Instance</h3> Refreshing every 10 seconds</i><hr><meta http-equiv=\\\"refresh\\\" content=\\\"10\\\">";
+
+}
+
 """.strip() + '\n\n'
 
 SPECIAL_NAKED_EXCEPTION="""
@@ -86,6 +93,8 @@ def make_nginx_uwsgi_block(location, port, comment, auth=False, authority=False)
     if auth:
         block += '\tauth_request /auth_check;\n'
     block += '\tinclude uwsgi_params;\n'
+    # for development, include the development footer
+    block += '\tadd_after_body /devfooter;\n'
 
     # TEMPORARY: run auth server as http (need to get it working internally with uwsgi)
     if authority:
